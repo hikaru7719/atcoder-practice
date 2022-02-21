@@ -20,10 +20,11 @@ fn main() {
     }
 
     let mut ans = 0;
+    // n-1 桁のbit
     for i in 0..1 << n {
         let mut v2: Vec<bool> = Vec::new();
-        for j in 1..n + 1 {
-            if i & 1 << (j - 1) != 0 {
+        for j in 0..n {
+            if i & 1 << j != 0 {
                 v2.push(true);
             } else {
                 v2.push(false);
