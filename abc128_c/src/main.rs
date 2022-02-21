@@ -20,7 +20,6 @@ fn main() {
     }
 
     let mut ans = 0;
-    // n-1 桁のbit
     for i in 0..1 << n {
         let mut v2: Vec<bool> = Vec::new();
         for j in 0..n {
