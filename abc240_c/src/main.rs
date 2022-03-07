@@ -2,25 +2,25 @@ use proconio::input;
 
 fn main() {
     input! {
-        n:i32,
-        x:i32,
-        v:[(i32, i32); n]
+        n:usize,
+        x:usize,
+        v:[(usize, usize); n]
     }
-    for i in 0..1 << n {
-        let mut sum = 0;
-        for j in 1..n + 1 {
-            let (x, y) = v[(j - 1) as usize];
-            if i & 1_i32 << (j - 1) == 0 {
-                sum += x;
-            } else {
-                sum += y;
+    let mut dp = vec![vec![0; x + 1]; n + 1];
+    dp[0][0] = 1;
+    for i in 1..n + 1 {
+        for k in 0..x + 1 {
+            if 0_i32 <= k as i32 - v[i - 1].0 as i32 && dp[i - 1][k - v[i - 1].0] == 1 {
+                dp[i][k] = 1;
+            }
+            if 0_i32 <= k as i32 - v[i - 1].1 as i32 && dp[i - 1][k - v[i - 1].1] == 1 {
+                dp[i][k] = 1;
             }
         }
-
-        if sum == x {
-            println!("Yes");
-            return;
-        }
     }
-    println!("{}", "No");
+    if dp[n][x] == 1 {
+        println!("Yes");
+    } else {
+        println!("No");
+    }
 }
