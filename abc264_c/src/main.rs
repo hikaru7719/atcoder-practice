@@ -13,42 +13,29 @@ fn main() {
         v2: [[i64;w2]; h2],
     };
 
-    let mut min_j = 0;
-    let mut count = 0;
-    for (i2, row) in v2.iter().enumerate() {
-        let (b, local_min_j) = row_include(min_j, i2, row, &v);
-        if b == true {
-            min_j = local_min_j;
-            count += 1;
-        }
-    }
-    if h2 <= count {
-        println!("Yes");
-    } else {
-        println!("No");
-    }
-}
+    for hh in 0..=1 << h {
+        for ww in 0..=1 << w {
+            let hvec: Vec<usize> = (0..h).into_iter().filter(|i| hh & 1 << i != 0).collect();
+            let wvec: Vec<usize> = (0..w).into_iter().filter(|j| ww & 1 << j != 0).collect();
 
-fn row_include(min_j: usize, i2: usize, row2: &Vec<i64>, vec: &Vec<Vec<i64>>) -> (bool, usize) {
-    for (i, row) in vec.iter().enumerate() {
-        let mut row_r = 0;
-        let mut min_i = 0;
-        let mut local_min_j = 0;
-        for (j, val) in row.iter().enumerate() {
-            local_min_j = j;
-            if min_j != 0 && j < min_j {
+            if hvec.len() != h2 || wvec.len() != w2 {
                 continue;
             }
-            for (j2, val2) in row2.iter().enumerate() {
-                if (min_i == 0 || min_i < i) && i2 <= i && j2 <= j && val2 == val {
-                    row_r += 1;
-                    min_i = i;
+
+            let mut result = true;
+            for hh2 in 0..h2 {
+                for ww2 in 0..w2 {
+                    if v[hvec[hh2]][wvec[ww2]] != v2[hh2][ww2] {
+                        result = false
+                    }
                 }
             }
-        }
-        if row2.len() <= row_r {
-            return (true, local_min_j);
+
+            if result {
+                println!("Yes");
+                return;
+            }
         }
     }
-    return (false, 0);
+    println!("No");
 }
