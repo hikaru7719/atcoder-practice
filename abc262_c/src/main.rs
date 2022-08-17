@@ -7,8 +7,8 @@ fn main() {
     };
 
     let mut some = 0;
-    for i in 0..n {
-        if a[i] - 1 == i as i64 {
+    for (i, v) in a.iter().enumerate() {
+        if v - 1 == i as i64 {
             some += 1;
         }
     }
