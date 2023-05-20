@@ -5,17 +5,17 @@ l = []
 for _ in range(0, n):
     l.append(input())
 
-flag = False
 for perm in itertools.permutations(l):
-    for i in range(0, len(perm)-1):
+    flag = True
+    for i in range(n-1):
         count = 0
-        for j in range(0, m):
+        for j in range(m):
             if perm[i][j] != perm[i+1][j]:
-                count = count + 1
-        if count == 1:
-            flag = True
+                count += 1
+        if count != 1:
+            flag = False
+    if flag:
+        print("Yes")
+        exit()
 
-if flag == True:
-    print("Yes")
-else:
-    print("No")
+print("No")
