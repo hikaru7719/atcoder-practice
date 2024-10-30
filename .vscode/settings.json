@@ -1,4 +1,11 @@
 {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "matklad.rust-analyzer"
-}
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.black-formatter",
+      "editor.codeActionsOnSave": {
+        "source.fixAll.ruff": "explicit",
+        "source.organizeImports.ruff": "explicit"
+      },
+      "isort.args":["--profile", "black"],
+    }
+  }
