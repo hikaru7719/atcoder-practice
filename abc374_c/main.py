@@ -2,7 +2,7 @@ n = int(input())
 k = list(map(int, input().split()))
 
 ans = 10**9
-for i in range(1 << (n + 1)):
+for i in range(1 << n):
     a = 0
     b = 0
     for j in range(n):
