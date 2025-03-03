@@ -1,36 +1,21 @@
 n, q = map(int, input().split())
-h = {i: (0, i) for i in range(n)}
-index = 0
-did_op_i = []
-did_op = []
+pigeon2back = [i for i in range(n)]  # 鳩とバックの対応
+back2hall = [i for i in range(n)]  # バックと巣の対応
+hall2back = [i for i in range(n)]  # 巣とバックの対応
 
 for i in range(q):
     op = list(map(int, input().split()))
     if op[0] == 1:
         a = op[1] - 1
         b = op[2] - 1
-        h[a] = (i, b)
-        did_op_i.append(index)
+        pigeon2back[a] = hall2back[b]
     elif op[0] == 2:
         a = op[1] - 1
         b = op[2] - 1
-        did_op.append((a, b))
-        did_op_i.append(index)
-        index += 1
+        hall2back[a], hall2back[b] = hall2back[b], hall2back[a]
+        back2hall[hall2back[a]] = a
+        back2hall[hall2back[b]] = b
     else:
-        a = op[1]
-        last_i, s = h[a]
-        last_op_i = did_op_i[last_i]
-        latest_op_i = did_op_i[i - 1]
-
-        for aa, bb in did_op[last_op_i : latest_op_i + 1]:
-            if aa == s:
-                s = aa
-            elif bb == s:
-                s = bb
-        print("****")
-        print(s + 1)
-        print("****")
-
-        h[a] = (i, s)
-        did_op_i.append(index)
+        a = op[1] - 1
+        ans = back2hall[pigeon2back[a]]
+        print(ans + 1)
