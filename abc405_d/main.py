@@ -1,15 +1,17 @@
 from collections import deque
 
 h, w = map(int, input().split())
+maze = [input().strip() for _ in range(h)]
+dist = [["" for _ in range(w)] for _ in range(h)]
 
-maze = []
 start = []
 for i in range(h):
-    s = list(input())
-    if "E" in s:
-        j = s.index("E")
-        start.append((i, j))
-    maze.append(s)
+    for j in range(w):
+        if maze[i][j] == "#":
+            dist[i][j] = "#"
+        if maze[i][j] == "E":
+            dist[i][j] = "E"
+            start.append((i, j))
 
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
@@ -42,9 +44,9 @@ while len(queue) > 0:
     x, y = queue.popleft()
     for i in range(4):
         nx, ny = x + dx[i], y + dy[i]
-        if 0 <= nx and nx < h and 0 <= ny and ny < w and maze[nx][ny] not in done_char:
-            maze[nx][ny] = decide_arrow(dx[i], dy[i])
+        if 0 <= nx and nx < h and 0 <= ny and ny < w and dist[nx][ny] == "":
+            dist[nx][ny] = decide_arrow(dx[i], dy[i])
             queue.append((nx, ny))
 
 for i in range(h):
-    print("".join(maze[i]))
+    print("".join(dist[i]))
